@@ -4,6 +4,12 @@ type ProductService struct {
 	Persistence ProductPersistenceInterface
 }
 
+func NewProductService(persistence ProductPersistenceInterface) *ProductService {
+	return &ProductService{
+		Persistence: persistence,
+	}
+}
+
 // não precisa saber qual o objeto de persistencia que vai ser usado, ele vai usar a interface
 func (s *ProductService) Get(id string) (ProductInterface, error) {
 	product, err := s.Persistence.Get(id)
@@ -57,5 +63,3 @@ func (s *ProductService) Disable(product ProductInterface) (ProductInterface, er
 
 	return result, nil
 }
-
-
