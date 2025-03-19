@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	dbAdapter "go-hexagonal/adapters/db"
 	"go-hexagonal/application"
 
@@ -14,5 +13,6 @@ func main() {
 	productDbAdapter := dbAdapter.NewProductDb(db)
 	productService := application.NewProductService(productDbAdapter)
 	product, _ := productService.Create("Product 1", 10.0)
-	fmt.Println(product)
+
+	productService.Enable(product)
 }
