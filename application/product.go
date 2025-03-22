@@ -22,6 +22,7 @@ type ProductInterface interface {
 	GetName() string
 	GetStatus() string
 	GetPrice() float64
+	ChangePrice(price float64) error
 }
 
 // funciona como um repositorio
@@ -51,7 +52,7 @@ const (
 )
 
 type Product struct {
-	ID     string  `validate:"required,uuid4"` 
+	ID     string  `validate:"required,uuid4"`
 	Name   string  `validate:"required"`
 	Price  float64 `validate:"gte=0"`
 	Status string  `validate:"required,oneof=enabled disabled"`
@@ -121,4 +122,15 @@ func (p *Product) GetStatus() string {
 
 func (p *Product) GetPrice() float64 {
 	return p.Price
+}
+
+func (p *Product) ChangePrice(price float64) error {
+	p.Price = price
+
+	_, err := p.IsValid()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
